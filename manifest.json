@@ -1,0 +1,34 @@
+{
+
+  "manifest_version": 2,
+  "name": "Indeed Company Location",
+  "version": "0.1",
+
+  "description": "Check the location of a company on indeed",
+
+  "icons": {
+    "48": "icons/border-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.indeed.com/*"],
+      "js": ["context-main.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["background-main.js"],
+    "matches": ["*://*.indeed.com/*"],
+    "include_globs": ["*://*.indeed.com/*"],
+    "persistent": false,
+    "type": "module"
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "notifications",
+    "tabs",
+    "menus"
+  ]
+
+}
