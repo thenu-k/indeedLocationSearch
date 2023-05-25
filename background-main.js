@@ -1,8 +1,10 @@
 // create the listing
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    // remove existing listings
+    browser.contextMenus.removeAll();
+    // refresh the menu
+    browser.contextMenus.refresh();
     if (request.createContextMenu) {
-        // remove existing listings
-        browser.contextMenus.removeAll();
         // replace white space with a dash
         const companyLocation = request.companyLocation.replace(/\s/g, '-');
         const companyAll = request.companyName.replace(/\s/g, '-') + '-' + companyLocation ;
@@ -24,7 +26,6 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 // adding the event listener. this has to be outside the on message listener or its going to get called every time the message is sent
 browser.contextMenus.onClicked.addListener(function add(info, tab) {
     const id = info.menuItemId;
-    console.log(id)
     if (id.includes('location-')) {
         const location = id.split('location-')[1];
         const locationNoDashes = location.replace(/-/g, '+');
@@ -39,6 +40,10 @@ browser.contextMenus.onClicked.addListener(function add(info, tab) {
             url: `https://www.google.com/maps/search/?api=1&query=${allNoDashes}`
         });
     }
+    // remove existing listings
+    browser.contextMenus.removeAll();
+    // refresh the menu
+    browser.contextMenus.refresh();
 });
 
 
